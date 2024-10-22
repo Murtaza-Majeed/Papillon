@@ -6,7 +6,6 @@ import DayScreen from "./Screens/DayScreen";
 import WeekScreen from "./Screens/WeekScreen";
 import MonthScreen from "./Screens/MonthScreen";
 import ToDoScreen from "./Screens/ToDoScreen";
-import AddEventScreen from "./Screens/AddEventScreen"; // New import
 
 const Tab = createBottomTabNavigator();
 
@@ -15,7 +14,7 @@ function AddButton({ onPress }) {
     <TouchableOpacity
       onPress={onPress}
       style={{
-        top: -20, // Adjusted to lower the button
+        top: -20,
         justifyContent: 'center',
         alignItems: 'center',
       }}
@@ -35,6 +34,11 @@ function AddButton({ onPress }) {
 }
 
 export default function Index() {
+  const handleAddTask = () => {
+    // Implement the logic to add a new task here
+    console.log('Add new task');
+  };
+
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -61,7 +65,7 @@ export default function Index() {
           elevation: 0,
           shadowOpacity: 0,
           height: 60,
-          paddingBottom: 10, // Add padding to the bottom
+          paddingBottom: 10,
         },
         tabBarItemStyle: {
           padding: 5,
@@ -70,34 +74,17 @@ export default function Index() {
         headerShown: false,
       })}
     >
-      <Tab.Screen 
-        name="Day" 
-        component={DayScreen}
-      />
-      <Tab.Screen 
-        name="Week" 
-        component={WeekScreen}
-      />
+      <Tab.Screen name="Day" component={DayScreen} />
+      <Tab.Screen name="Week" component={WeekScreen} />
       <Tab.Screen 
         name="Add" 
-        component={AddEventScreen}
-        options={({ navigation }) => ({
-          tabBarButton: (props) => (
-            <AddButton 
-              {...props} 
-              onPress={() => navigation.navigate('Add')}
-            />
-          ),
-        })}
+        component={DayScreen}
+        options={{
+          tabBarButton: (props) => <AddButton {...props} onPress={handleAddTask} />,
+        }}
       />
-      <Tab.Screen 
-        name="Month" 
-        component={MonthScreen}
-      />
-      <Tab.Screen 
-        name="ToDo" 
-        component={ToDoScreen}
-      />
+      <Tab.Screen name="Month" component={MonthScreen} />
+      <Tab.Screen name="ToDo" component={ToDoScreen} />
     </Tab.Navigator>
   );
 }
